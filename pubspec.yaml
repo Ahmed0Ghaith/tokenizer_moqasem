@@ -1,6 +1,6 @@
 name: tokenizer_moqasem
 description: Intelligent tokenization plugin with advanced Arabic support, fuzzy matching, phonetic analysis, and AI-powered text processing. Built with 95% AI assistance.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/Ahmed0Ghaith
 repository: https://github.com/Ahmed0Ghaith/tokenizer_moqasem
 issue_tracker: https://github.com/Ahmed0Ghaith/tokenizer_moqasem/issues
