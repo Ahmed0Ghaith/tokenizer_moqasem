@@ -27,14 +27,14 @@ void main() {
     });
 
     test('Lowercase conversion', () {
-      final tokenizer = Tokenizer(config: TokenizerConfig(toLowerCase: true));
+      final tokenizer = Tokenizer(config: const TokenizerConfig(toLowerCase: true));
       final tokens = tokenizer.tokenize('Hello World');
       expect(tokens, ['hello', 'world']);
     });
 
     test('Stop words removal', () {
       final tokenizer = Tokenizer(
-        config: TokenizerConfig(removeStopWords: true, stopWords: {'the', 'a'}),
+        config: const TokenizerConfig(removeStopWords: true, stopWords: {'the', 'a'}),
       );
       final tokens = tokenizer.tokenize('the cat and a dog');
       expect(tokens, ['cat', 'and', 'dog']);
@@ -92,7 +92,7 @@ void main() {
 
     test('Fuzzy Jaccard similarity', () {
       final tokenizer = Tokenizer(
-        config: TokenizerConfig(useFuzzyMatching: true),
+        config: const TokenizerConfig(useFuzzyMatching: true),
       );
       final sim = tokenizer.fuzzyJaccardSimilarity(
         'I love programming',
@@ -111,7 +111,7 @@ void main() {
   group('N-gram Tests', () {
     test('Bigram tokenization', () {
       final tokenizer = Tokenizer(
-        config: TokenizerConfig(type: TokenizationType.ngram, ngramSize: 2),
+        config: const TokenizerConfig(type: TokenizationType.ngram, ngramSize: 2),
       );
       final tokens = tokenizer.tokenize('one two three');
       expect(tokens, ['one two', 'two three']);
@@ -119,7 +119,7 @@ void main() {
 
     test('Trigram tokenization', () {
       final tokenizer = Tokenizer(
-        config: TokenizerConfig(type: TokenizationType.ngram, ngramSize: 3),
+        config: const TokenizerConfig(type: TokenizationType.ngram, ngramSize: 3),
       );
       final tokens = tokenizer.tokenize('one two three four');
       expect(tokens, ['one two three', 'two three four']);
@@ -141,7 +141,7 @@ void main() {
 
     test('Arabic sentence comparison', () {
       final tokenizer = Tokenizer(
-        config: TokenizerConfig(useFuzzyMatching: true),
+        config: const TokenizerConfig(useFuzzyMatching: true),
       );
       final results = tokenizer.compareSentences('مرحباً بك', [
         'مرحبا بكم',
@@ -169,7 +169,7 @@ void main() {
 
   group('Configuration Tests', () {
     test('Config to/from JSON', () {
-      final config = TokenizerConfig(
+      const config = TokenizerConfig(
         type: TokenizationType.word,
         toLowerCase: true,
         fuzzyThreshold: 0.8,
@@ -228,7 +228,7 @@ void main() {
 
     test('Special characters', () {
       final tokenizer = Tokenizer(
-        config: TokenizerConfig(removePunctuation: true),
+        config: const TokenizerConfig(removePunctuation: true),
       );
       final tokens = tokenizer.tokenize('Hello, world!');
       expect(tokens, ['Hello', 'world']);

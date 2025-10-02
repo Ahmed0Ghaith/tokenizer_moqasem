@@ -49,9 +49,11 @@ class ArabicStemmer {
 
   /// Extract stem from Arabic word
   static String stem(String word) {
-    if (word.length < 3) return word;
+    if (word.length < 3) {
+      return word;
+    }
 
-    String stemmed = ArabicProcessor.normalize(word);
+    var stemmed = ArabicProcessor.normalize(word);
 
     // Remove prefixes
     stemmed = _removePrefixes(stemmed);
@@ -85,10 +87,12 @@ class ArabicStemmer {
 
   /// Extract potential root (simplified - returns 3-4 letter core)
   static String extractRoot(String word) {
-    String root = stem(word);
+    final root = stem(word);
 
     // Arabic roots are typically 3-4 letters
-    if (root.length <= 4) return root;
+    if (root.length <= 4) {
+      return root;
+    }
 
     // Remove weak letters (حروف العلة)
     final weakLetters = {'ا', 'و', 'ي', 'ى'};

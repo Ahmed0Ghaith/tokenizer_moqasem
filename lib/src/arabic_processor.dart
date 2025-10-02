@@ -5,9 +5,11 @@ library;
 class ArabicProcessor {
   /// Normalize Arabic text (remove diacritics and normalize characters)
   static String normalize(String text) {
-    if (text.isEmpty) return text;
+    if (text.isEmpty) {
+      return text;
+    }
 
-    String normalized = text;
+    var normalized = text;
 
     // Remove Arabic diacritics (Tashkeel)
     normalized = normalized.replaceAll(RegExp(r'[\u064B-\u065F\u0670]'), '');
@@ -82,9 +84,9 @@ class ArabicProcessor {
   /// Convert Arabic numbers to English numbers
   static String arabicToEnglishNumbers(String text) {
     const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    String result = text;
+    var result = text;
 
-    for (int i = 0; i < arabicDigits.length; i++) {
+    for (var i = 0; i < arabicDigits.length; i++) {
       result = result.replaceAll(arabicDigits[i], i.toString());
     }
 
@@ -94,9 +96,9 @@ class ArabicProcessor {
   /// Convert English numbers to Arabic numbers
   static String englishToArabicNumbers(String text) {
     const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    String result = text;
+    var result = text;
 
-    for (int i = 0; i < arabicDigits.length; i++) {
+    for (var i = 0; i < arabicDigits.length; i++) {
       result = result.replaceAll(i.toString(), arabicDigits[i]);
     }
 
@@ -105,38 +107,58 @@ class ArabicProcessor {
 
   /// Get character type for Arabic phonetic analysis
   static String getCharacterType(String char) {
-    if (char.isEmpty) return 'unknown';
+    if (char.isEmpty) {
+      return 'unknown';
+    }
 
     // Pharyngeal and glottal consonants
-    if ('حخعغهء'.contains(char)) return 'pharyngeal';
+    if ('حخعغهء'.contains(char)) {
+      return 'pharyngeal';
+    }
 
     // Emphatic consonants
-    if ('صضطظ'.contains(char)) return 'emphatic';
+    if ('صضطظ'.contains(char)) {
+      return 'emphatic';
+    }
 
     // Sibilants
-    if ('سشصض'.contains(char)) return 'sibilant';
+    if ('سشصض'.contains(char)) {
+      return 'sibilant';
+    }
 
     // Stops
-    if ('بتدطكق'.contains(char)) return 'stop';
+    if ('بتدطكق'.contains(char)) {
+      return 'stop';
+    }
 
     // Fricatives
-    if ('ثذسشصضظفهـ'.contains(char)) return 'fricative';
+    if ('ثذسشصضظفهـ'.contains(char)) {
+      return 'fricative';
+    }
 
     // Nasals
-    if ('من'.contains(char)) return 'nasal';
+    if ('من'.contains(char)) {
+      return 'nasal';
+    }
 
     // Liquids
-    if ('لر'.contains(char)) return 'liquid';
+    if ('لر'.contains(char)) {
+      return 'liquid';
+    }
 
     // Vowels
-    if ('اويى'.contains(char)) return 'vowel';
+    if ('اويى'.contains(char)) {
+      return 'vowel';
+    }
 
     return 'consonant';
   }
 
   /// Check if two Arabic characters are phonetically similar
   static bool arePhoneticallySimilar(String char1, String char2) {
-    if (char1 == char2) return true;
+    if (char1 == char2) {
+      return true;
+    }
 
     // Similar sounding groups
     final similarGroups = [
@@ -163,7 +185,7 @@ class ArabicProcessor {
 
   /// Clean and prepare Arabic text for processing
   static String clean(String text) {
-    String cleaned = text;
+    var cleaned = text;
 
     // Remove extra whitespace
     cleaned = cleaned.replaceAll(RegExp(r'\s+'), ' ').trim();
@@ -181,7 +203,7 @@ class ArabicProcessor {
 
   /// Extract root-like pattern (simplified stemming)
   static String extractPattern(String word) {
-    String pattern = word;
+    var pattern = word;
 
     // Remove prefixes
     final prefixes = ['ال', 'و', 'ف', 'ب', 'ك', 'ل'];

@@ -2,13 +2,14 @@
 library;
 
 import 'dart:math';
-import 'config.dart';
-import 'models.dart';
+
 import 'arabic_processor.dart';
-import 'similarity_calculator.dart';
-import 'phonetic_matcher.dart';
-import 'stemmer.dart';
+import 'config.dart';
 import 'constants.dart';
+import 'models.dart';
+import 'phonetic_matcher.dart';
+import 'similarity_calculator.dart';
+import 'stemmer.dart';
 
 /// Main Tokenizer class with comprehensive text processing capabilities
 ///
@@ -36,14 +37,16 @@ class Tokenizer {
   /// print(tokens); // [مرحبا, بك]
   /// ```
   List<String> tokenize(String text) {
-    if (text.isEmpty) return [];
+    if (text.isEmpty) {
+      return [];
+    }
 
     // Check cache first
     if (config.enableCaching && _tokenCache.containsKey(text)) {
       return _tokenCache[text]!;
     }
 
-    String processedText = text;
+    var processedText = text;
 
     // Detect and process Arabic
     final lang = detectLanguage(text);
@@ -143,9 +146,11 @@ class Tokenizer {
     final n = config.ngramSize;
     final ngrams = <String>[];
 
-    if (words.length < n) return [text];
+    if (words.length < n) {
+      return [text];
+    }
 
-    for (int i = 0; i <= words.length - n; i++) {
+    for (var i = 0; i <= words.length - n; i++) {
       ngrams.add(words.sublist(i, i + n).join(' '));
     }
 
@@ -176,9 +181,11 @@ class Tokenizer {
 
   /// Find the best matching word from a list
   WordSimilarity? findBestMatch(String word, List<String> candidates) {
-    if (candidates.isEmpty) return null;
+    if (candidates.isEmpty) {
+      return null;
+    }
 
-    double bestSimilarity = 0.0;
+    var bestSimilarity = 0.0;
     String? bestMatch;
 
     for (final candidate in candidates) {
@@ -212,7 +219,9 @@ class Tokenizer {
 
   /// Detect language of text
   Language detectLanguage(String text) {
-    if (text.isEmpty) return Language.unknown;
+    if (text.isEmpty) {
+      return Language.unknown;
+    }
 
     final arabicMatches = TokenizerConstants.patterns['arabicWord']!
         .allMatches(text)
@@ -221,9 +230,15 @@ class Tokenizer {
         .allMatches(text)
         .length;
 
-    if (arabicMatches == 0 && englishMatches == 0) return Language.unknown;
-    if (arabicMatches > 0 && englishMatches > 0) return Language.mixed;
-    if (arabicMatches > englishMatches) return Language.arabic;
+    if (arabicMatches == 0 && englishMatches == 0) {
+      return Language.unknown;
+    }
+    if (arabicMatches > 0 && englishMatches > 0) {
+      return Language.mixed;
+    }
+    if (arabicMatches > englishMatches) {
+      return Language.arabic;
+    }
     return Language.english;
   }
 
@@ -267,8 +282,12 @@ class Tokenizer {
     final tokens1 = tokenize(text1);
     final tokens2 = tokenize(text2);
 
-    if (tokens1.isEmpty && tokens2.isEmpty) return 100.0;
-    if (tokens1.isEmpty || tokens2.isEmpty) return 0.0;
+    if (tokens1.isEmpty && tokens2.isEmpty) {
+      return 100.0;
+    }
+    if (tokens1.isEmpty || tokens2.isEmpty) {
+      return 0.0;
+    }
 
     double result;
 
@@ -279,8 +298,8 @@ class Tokenizer {
     } else {
       // Fuzzy matching
       final matched = <String>{};
-      double totalSimilarity = 0.0;
-      int matchCount = 0;
+      var totalSimilarity = 0.0;
+      var matchCount = 0;
 
       for (final token1 in tokens1) {
         final bestMatch = findBestMatch(
@@ -317,7 +336,9 @@ class Tokenizer {
     final tokens1 = tokenize(text1);
     final tokens2 = tokenize(text2);
 
-    if (tokens1.isEmpty || tokens2.isEmpty) return 0.0;
+    if (tokens1.isEmpty || tokens2.isEmpty) {
+      return 0.0;
+    }
 
     double result;
 
@@ -327,9 +348,9 @@ class Tokenizer {
       result = SimilarityCalculator.cosineSimilarity(freq1, freq2) * 100;
     } else {
       // Fuzzy cosine with phonetic matching
-      double dotProduct = 0.0;
-      double magnitude1 = 0.0;
-      double magnitude2 = 0.0;
+      var dotProduct = 0.0;
+      var magnitude1 = 0.0;
+      var magnitude2 = 0.0;
 
       final allTokens = {...tokens1, ...tokens2};
 
@@ -365,12 +386,12 @@ class Tokenizer {
   }) {
     final results = <SimilarityResult>[];
 
-    for (int i = 0; i < targetSentences.length; i++) {
+    for (var i = 0; i < targetSentences.length; i++) {
       final similarity = useCosineSimilarity
           ? fuzzyCosineSimilarity(querySentence, targetSentences[i])
           : fuzzyJaccardSimilarity(querySentence, targetSentences[i]);
 
-      List<WordSimilarity> wordMatches = [];
+      final wordMatches = <WordSimilarity>[];
 
       if (showWordMatches && config.useFuzzyMatching) {
         final queryTokens = tokenize(querySentence);
@@ -398,7 +419,7 @@ class Tokenizer {
     results.sort((a, b) => b.percentage.compareTo(a.percentage));
 
     // Assign ranks
-    for (int i = 0; i < results.length; i++) {
+    for (var i = 0; i < results.length; i++) {
       results[i] = SimilarityResult(
         sentence: results[i].sentence,
         percentage: results[i].percentage,
@@ -443,9 +464,9 @@ class Tokenizer {
     final unique = uniqueTokens(text);
     final frequency = tokenFrequency(text);
 
-    int arabicWords = 0;
-    int englishWords = 0;
-    int mixedWords = 0;
+    var arabicWords = 0;
+    var englishWords = 0;
+    var mixedWords = 0;
     double totalLength = 0;
 
     for (final token in tokens) {
@@ -490,9 +511,9 @@ class Tokenizer {
   List<List<double>> compareAllPairs(List<String> texts) {
     final matrix = <List<double>>[];
 
-    for (int i = 0; i < texts.length; i++) {
+    for (var i = 0; i < texts.length; i++) {
       final row = <double>[];
-      for (int j = 0; j < texts.length; j++) {
+      for (var j = 0; j < texts.length; j++) {
         if (i == j) {
           row.add(100.0);
         } else {
