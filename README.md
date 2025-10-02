@@ -290,4 +290,4 @@ If you find this package helpful, please give it a ⭐️ on [GitHub](https://gi
 
 ---
 
-**Made with ❤️ and 🤖 AI** | © 2025 Your Name
+**Made with ❤️ and 🤖 AI** | © 2025 Ahmed Ghaith
