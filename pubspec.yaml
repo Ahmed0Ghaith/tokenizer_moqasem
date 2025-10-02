@@ -7,12 +7,11 @@ issue_tracker: https://github.com/Ahmed0Ghaith/tokenizer_moqasem/issues
 documentation: https://pub.dev/documentation/tokenizer_moqasem/latest/
 
 topics:
-  - tokenizer
   - nlp
+  - tokenizer
   - arabic
-  - text-processing
+  - text-analysis
   - fuzzy-matching
-  - ai
 
 flutter:
 
